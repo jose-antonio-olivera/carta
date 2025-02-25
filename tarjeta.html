@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💖 Tarjeta de San Valentín</title>
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #ff4d6d, #66101f);
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Botón para abrir la tarjeta */
+        .open-card-btn {
+            position: absolute;
+            background: white;
+            border: 3px solid red;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        .open-card-btn:hover {
+            background: red;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Contenedor de la tarjeta */
+        .card {
+            width: 300px;
+            height: 400px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            padding: 20px;
+            transform: scale(0);
+            transition: transform 0.5s ease-in-out;
+            position: absolute;
+        }
+
+        /* Corazón animado (más pequeño) */
+        .heart {
+            width: 60px; /* Tamaño reducido */
+            height: 60px;
+            background: red;
+            position: relative;
+            margin: 10px auto;
+            transform: rotate(-45deg);
+            animation: heartbeat 1s infinite alternate;
+            box-shadow: 0 0 15px red;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: red;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -30px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 30px;
+            top: 0;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1) rotate(-45deg); }
+            100% { transform: scale(1.1) rotate(-45deg); }
+        }
+
+        /* Mensaje con efecto de máquina de escribir */
+        .message {
+            font-size: 18px;
+            color: #d00000;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #d00000;
+            width: 0;
+            display: inline-block;
+            animation: typing 3s steps(40, end) forwards, blink 0.7s infinite;
+        }
+
+        @keyframes typing {
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Input para personalizar la tarjeta */
+        input {
+            width: 80%;
+            padding: 8px;
+            margin-top: 15px;
+            border: 2px solid #d00000;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Botón para abrir la tarjeta -->
+    <button class="open-card-btn" id="openButton" onclick="openCard()">💌 Abre tu tarjeta</button>
+
+    <!-- Tarjeta de San Valentín -->
+    <div class="card" id="card">
+        <h2>Feliz San Valentín ❤️</h2>
+        <div class="heart"></div>
+        <p class="message" id="message"></p>
+        <input type="text" id="nameInput" placeholder="Escribe tu nombre" oninput="personalizeMessage()">
+    </div>
+
+    <script>
+        function openCard() {
+            // Ocultar el botón y mostrar la tarjeta
+            document.getElementById("openButton").style.display = "none";
+            document.getElementById("card").style.transform = "scale(1)";
+
+            // Esperar y mostrar el mensaje con efecto de máquina de escribir
+            setTimeout(() => {
+                typeMessage();
+            }, 500);
+        }
+
+        function typeMessage() {
+            let messageText = "Eres muy especial para mí 💖";
+            let messageElement = document.getElementById("message");
+            let index = 0;
+
+            function type() {
+                if (index < messageText.length) {
+                    messageElement.textContent += messageText[index];
+                    index++;
+                    setTimeout(type, 100);
+                }
+            }
+            type();
+        }
+
+        function personalizeMessage() {
+            let name = document.getElementById("nameInput").value;
+            if (name.trim() !== "") {
+                document.getElementById("message").textContent = `Feliz San Valentín, ${name}! 💖`;
+            } else {
+                typeMessage();
+            }
+        }
+    </script>
+
+</body>
+</html>
